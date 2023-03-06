@@ -20,3 +20,4 @@ TestResults/
 BenchmarkDotNet.Artifacts/
 .idea/
 .DS_Store
+.cr/
