@@ -578,3 +578,11 @@ public partial class FbAdapter
         return Convert.ToInt32(id);
     }
 }
+
+public partial class OracleAdapter
+{
+    public async Task<int> InsertAsync(IDbConnection connection, IDbTransaction transaction, int? commandTimeout, string tableName, string columnList, string parameterList, IEnumerable<PropertyInfo> keyProperties, object entityToInsert)
+    {
+        throw new NotImplementedException();
+    }
+}

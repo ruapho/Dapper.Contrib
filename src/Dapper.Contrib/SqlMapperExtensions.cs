@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using System.Threading;
 
 using Dapper;
+using System.Threading.Tasks;
 
 namespace Dapper.Contrib.Extensions
 {
@@ -74,7 +75,8 @@ namespace Dapper.Contrib.Extensions
                 ["npgsqlconnection"] = new PostgresAdapter(),
                 ["sqliteconnection"] = new SQLiteAdapter(),
                 ["mysqlconnection"] = new MySqlAdapter(),
-                ["fbconnection"] = new FbAdapter()
+                ["fbconnection"] = new FbAdapter(),
+                ["oracleconnection"] = new OracleAdapter()
             };
 
         private static List<PropertyInfo> ComputedPropertiesCache(Type type)
@@ -1196,5 +1198,23 @@ public partial class FbAdapter : ISqlAdapter
     public void AppendColumnNameEqualsValue(StringBuilder sb, string columnName, string parameterPrefix)
     {
         sb.AppendFormat("{0} = {2}{1}", columnName, columnName, parameterPrefix);
+    }
+}
+
+public partial class OracleAdapter : ISqlAdapter
+{
+    public void AppendColumnName(StringBuilder sb, string columnName)
+    {
+        sb.AppendFormat("{0}", columnName);
+    }
+
+    public void AppendColumnNameEqualsValue(StringBuilder sb, string columnName, string parameterPrefix)
+    {
+        sb.AppendFormat("{0}={2}{1}", columnName, columnName, parameterPrefix);
+    }
+
+    public int Insert(IDbConnection connection, IDbTransaction transaction, int? commandTimeout, string tableName, string columnList, string parameterList, IEnumerable<PropertyInfo> keyProperties, object entityToInsert)
+    {
+        throw new NotImplementedException();
     }
 }
